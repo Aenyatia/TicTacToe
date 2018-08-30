@@ -8,7 +8,16 @@
 		ResizeMode="NoResize"
 		Title="Tic Tac Toe - Aenyatia" Height="900" Width="900">
 	
-	<Grid>
+	<Window.Resources>
+		<Style TargetType="Button">
+			<Setter Property="Background" Value="White" />
+			<Setter Property="Foreground" Value="DodgerBlue" />
+			<Setter Property="BorderThickness" Value="0.5" />
+			<Setter Property="FontSize" Value="200" />
+		</Style>
+	</Window.Resources>
+
+	<Grid Name="Container">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="*" />
@@ -21,16 +30,16 @@
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 
-		<Button Name="Button00" Grid.Column="0" Grid.Row="0" />
-		<Button Name="Button01" Grid.Column="1" Grid.Row="0" />
-		<Button Name="Button02" Grid.Column="2" Grid.Row="0" />
+		<Button Name="Button00" Grid.Column="0" Grid.Row="0" Content="X"/>
+		<Button Name="Button10" Grid.Column="1" Grid.Row="0" />
+		<Button Name="Button20" Grid.Column="2" Grid.Row="0" />
 		
-		<Button Name="Button10" Grid.Column="0" Grid.Row="1" />
+		<Button Name="Button01" Grid.Column="0" Grid.Row="1" />
 		<Button Name="Button11" Grid.Column="1" Grid.Row="1" />
-		<Button Name="Button12" Grid.Column="2" Grid.Row="1" />
+		<Button Name="Button21" Grid.Column="2" Grid.Row="1" />
 		
-		<Button Name="Button20" Grid.Column="0" Grid.Row="2" />
-		<Button Name="Button21" Grid.Column="1" Grid.Row="2" />
+		<Button Name="Button02" Grid.Column="0" Grid.Row="2" />
+		<Button Name="Button12" Grid.Column="1" Grid.Row="2" />
 		<Button Name="Button22" Grid.Column="2" Grid.Row="2" />
 	</Grid>
 </Window>

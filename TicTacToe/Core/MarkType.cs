@@ -1,5 +1,8 @@
-﻿namespace TicTacToe.Core
+﻿using System;
+
+namespace TicTacToe.Core
 {
+	[Flags]
 	public enum MarkType
 	{
 		Empty = 0,

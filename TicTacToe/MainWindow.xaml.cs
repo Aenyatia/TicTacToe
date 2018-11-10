@@ -1,46 +1,44 @@
-﻿using System.Linq;
+﻿using NHibernate;
+using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using TicTacToe.Core;
+using TicTacToe.NHibernate;
 using Color = TicTacToe.Resources.Color;
 
 namespace TicTacToe
 {
-	//todo set players depending on user input
-	//todo create database to save players score
-
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
-	public partial class MainWindow : Window
+	public partial class MainWindow
 	{
+		private readonly ISessionFactory _sessionFactory;
 		private readonly MarkType[] _board;
 
-		private Player _crossPlayer;
-		private Player _circlePlayer;
+		private readonly Player _crossPlayer;
+		private readonly Player _circlePlayer;
 
 		private bool _isGameOver;
+		private bool _isDraw;
 		private bool _isCrossTurn;
 
-		public MainWindow()
+		public MainWindow(Player crossPlayer, Player circlePlayer)
 		{
+			_crossPlayer = crossPlayer ?? throw new ArgumentNullException(nameof(crossPlayer));
+			_circlePlayer = circlePlayer ?? throw new ArgumentNullException(nameof(circlePlayer));
+
 			_board = new MarkType[9];
+			_sessionFactory = DataBase.GetSessionFactory();
 
 			InitializeComponent();
-			SetPlayers();
-			Start();
-		}
 
-		private void SetPlayers()
-		{
-			_crossPlayer = new Player { Name = "Geralt" };
-			_circlePlayer = new Player { Name = "Yennefer" };
+			Start();
 		}
 
 		private void Start()
 		{
 			_isGameOver = false;
+			_isDraw = false;
 			_isCrossTurn = true;
 
 			ClearBoard();
@@ -136,6 +134,7 @@ namespace TicTacToe
 			if (!_isGameOver && _board.All(f => f != MarkType.Empty))
 			{
 				_isGameOver = true;
+				_isDraw = true;
 
 				Container.Children.Cast<Button>().ToList().ForEach(b =>
 				{
@@ -149,7 +148,7 @@ namespace TicTacToe
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
 			if (_isGameOver)
-				Start();
+				return;
 
 			var button = (Button)sender;
 
@@ -176,6 +175,38 @@ namespace TicTacToe
 			_isCrossTurn ^= true;
 
 			CheckWinner();
+
+			if (_isGameOver)
+				UpdateScore();
+		}
+
+		private void UpdateScore()
+		{
+			using (var session = _sessionFactory.OpenSession())
+			using (var transaction = session.BeginTransaction())
+			{
+				if (_isDraw)
+				{
+					_crossPlayer.AddDraw();
+					_circlePlayer.AddDraw();
+				}
+
+				if (_isCrossTurn)
+				{
+					_crossPlayer.AddLose();
+					_circlePlayer.AddWin();
+				}
+				else
+				{
+					_crossPlayer.AddWin();
+					_circlePlayer.AddLose();
+				}
+
+				session.SaveOrUpdate(_crossPlayer);
+				session.SaveOrUpdate(_circlePlayer);
+
+				transaction.Commit();
+			}
 		}
 	}
 }

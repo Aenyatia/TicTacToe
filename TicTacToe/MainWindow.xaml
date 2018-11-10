@@ -5,7 +5,7 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		mc:Ignorable="d"
 		ResizeMode="NoResize"
-		Title="Tic Tac Toe - Aenyatia" Height="900" Width="900">
+		Title="Tic Tac Toe" Height="900" Width="900">
 
 	<Grid Name="Container">
 		<Grid.ColumnDefinitions>

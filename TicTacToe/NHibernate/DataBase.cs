@@ -16,7 +16,7 @@ namespace TicTacToe.NHibernate
 
 		private static ISessionFactory CreateSessionFactory()
 		{
-			const string connectionString = "Data source=(LocalDb)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Rin\\TicTacToe.mdf;Database=TicTacToe;Integrated Security=True";
+			const string connectionString = "Data source=(LocalDb)\\MSSQLLocalDB;AttachDbFilename=PATH;Database=DATABASE_NAME;Integrated Security=True";
 
 			var sqlConfiguration = MsSqlConfiguration.MsSql2012
 				.ConnectionString(connectionString)

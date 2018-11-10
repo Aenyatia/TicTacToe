@@ -7,29 +7,41 @@
 		ResizeMode="NoResize"
 		Title="Tic Tac Toe" Height="900" Width="900">
 
-	<Grid Name="Container">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="*" />
-			<ColumnDefinition Width="*" />
-			<ColumnDefinition Width="*" />
-		</Grid.ColumnDefinitions>
+	<DockPanel>
+		<Menu DockPanel.Dock="Top">
+			<MenuItem Header="_Game">
+				<MenuItem Click="NewGame_Click" Header="_New game" />
+				<MenuItem Click="ChangePlayers_Click" Header="_Change players" />
+				<MenuItem Click="ShowScore_Click" Header="_Show score" />
+				<Separator />
+				<MenuItem Click="Exit_Click" Header="_Exit" />
+			</MenuItem>
+		</Menu>
 
-		<Grid.RowDefinitions>
-			<RowDefinition Height="*" />
-			<RowDefinition Height="*" />
-			<RowDefinition Height="*" />
-		</Grid.RowDefinitions>
+		<Grid Name="Container">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
 
-		<Button Name="Button00" Click="Button_Click" Grid.Column="0" Grid.Row="0" />
-		<Button Name="Button10" Click="Button_Click" Grid.Column="1" Grid.Row="0" />
-		<Button Name="Button20" Click="Button_Click" Grid.Column="2" Grid.Row="0" />
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
 
-		<Button Name="Button01" Click="Button_Click" Grid.Column="0" Grid.Row="1" />
-		<Button Name="Button11" Click="Button_Click" Grid.Column="1" Grid.Row="1" />
-		<Button Name="Button21" Click="Button_Click" Grid.Column="2" Grid.Row="1" />
+			<Button Name="Button00" Click="Button_Click" Grid.Column="0" Grid.Row="0" />
+			<Button Name="Button10" Click="Button_Click" Grid.Column="1" Grid.Row="0" />
+			<Button Name="Button20" Click="Button_Click" Grid.Column="2" Grid.Row="0" />
 
-		<Button Name="Button02" Click="Button_Click" Grid.Column="0" Grid.Row="2" />
-		<Button Name="Button12" Click="Button_Click" Grid.Column="1" Grid.Row="2" />
-		<Button Name="Button22" Click="Button_Click" Grid.Column="2" Grid.Row="2" />
-	</Grid>
+			<Button Name="Button01" Click="Button_Click" Grid.Column="0" Grid.Row="1" />
+			<Button Name="Button11" Click="Button_Click" Grid.Column="1" Grid.Row="1" />
+			<Button Name="Button21" Click="Button_Click" Grid.Column="2" Grid.Row="1" />
+
+			<Button Name="Button02" Click="Button_Click" Grid.Column="0" Grid.Row="2" />
+			<Button Name="Button12" Click="Button_Click" Grid.Column="1" Grid.Row="2" />
+			<Button Name="Button22" Click="Button_Click" Grid.Column="2" Grid.Row="2" />
+		</Grid>
+	</DockPanel>
 </Window>

@@ -81,9 +81,13 @@
     <Compile Include="NHibernate\DataBase.cs" />
     <Compile Include="NHibernate\PlayerMap.cs" />
     <Compile Include="Resources\Color.cs" />
+    <Compile Include="Score.xaml.cs">
+      <DependentUpon>Score.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SetPlayers.xaml.cs">
       <DependentUpon>SetPlayers.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ScoreViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -98,6 +102,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Score.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SetPlayers.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

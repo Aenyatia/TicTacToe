@@ -145,6 +145,35 @@ namespace TicTacToe
 			#endregion
 		}
 
+		private void UpdateScore()
+		{
+			using (var session = _sessionFactory.OpenSession())
+			using (var transaction = session.BeginTransaction())
+			{
+				if (_isDraw)
+				{
+					_crossPlayer.AddDraw();
+					_circlePlayer.AddDraw();
+				}
+
+				if (_isCrossTurn)
+				{
+					_crossPlayer.AddLose();
+					_circlePlayer.AddWin();
+				}
+				else
+				{
+					_crossPlayer.AddWin();
+					_circlePlayer.AddLose();
+				}
+
+				session.SaveOrUpdate(_crossPlayer);
+				session.SaveOrUpdate(_circlePlayer);
+
+				transaction.Commit();
+			}
+		}
+
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
 			if (_isGameOver)
@@ -180,33 +209,28 @@ namespace TicTacToe
 				UpdateScore();
 		}
 
-		private void UpdateScore()
+		private void NewGame_Click(object sender, RoutedEventArgs e)
 		{
-			using (var session = _sessionFactory.OpenSession())
-			using (var transaction = session.BeginTransaction())
-			{
-				if (_isDraw)
-				{
-					_crossPlayer.AddDraw();
-					_circlePlayer.AddDraw();
-				}
+			Start();
+		}
 
-				if (_isCrossTurn)
-				{
-					_crossPlayer.AddLose();
-					_circlePlayer.AddWin();
-				}
-				else
-				{
-					_crossPlayer.AddWin();
-					_circlePlayer.AddLose();
-				}
+		private void ChangePlayers_Click(object sender, RoutedEventArgs e)
+		{
+			var setPlayers = new SetPlayers();
+			setPlayers.Show();
 
-				session.SaveOrUpdate(_crossPlayer);
-				session.SaveOrUpdate(_circlePlayer);
+			Close();
+		}
 
-				transaction.Commit();
-			}
+		private void ShowScore_Click(object sender, RoutedEventArgs e)
+		{
+			var score = new Score();
+			score.Show();
+		}
+
+		private void Exit_Click(object sender, RoutedEventArgs e)
+		{
+			Environment.Exit(0);
 		}
 	}
 }

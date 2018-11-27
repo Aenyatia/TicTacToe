@@ -151,8 +151,7 @@ namespace TicTacToe
 					_crossPlayer.AddDraw();
 					_circlePlayer.AddDraw();
 				}
-
-				if (_isCrossTurn)
+				else if (_isCrossTurn)
 				{
 					_crossPlayer.AddLose();
 					_circlePlayer.AddWin();

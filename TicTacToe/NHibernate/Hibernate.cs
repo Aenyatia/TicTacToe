@@ -6,29 +6,31 @@ using NHibernate.Tool.hbm2ddl;
 
 namespace TicTacToe.NHibernate
 {
-	public class DataBase
+	public class Hibernate
 	{
+		private const bool ResetDatabase = false;
+		private const bool DropDatabase = false;
+		private const string ConnectionString = @"Data source=(LocalDb)\MSSQLLocalDB;AttachDbFilename=DATABASE_PATH;Integrated Security=True";
+
 		private static ISessionFactory _sessionFactory;
 
-		private DataBase() { }
+		private Hibernate() { }
 
 		public static ISessionFactory GetSessionFactory() => _sessionFactory ?? (_sessionFactory = CreateSessionFactory());
 
 		private static ISessionFactory CreateSessionFactory()
 		{
-			const string connectionString = "Data source=(LocalDb)\\MSSQLLocalDB;AttachDbFilename=PATH;Database=DATABASE_NAME;Integrated Security=True";
-
 			var sqlConfiguration = MsSqlConfiguration.MsSql2012
-				.ConnectionString(connectionString)
+				.ConnectionString(ConnectionString)
 				.ShowSql();
 
 			void Config(Configuration cfg)
 				=> new SchemaExport(cfg)
-					.Execute(true, false, false);
+					.Execute(true, ResetDatabase, DropDatabase);
 
 			return Fluently.Configure()
 				.Database(sqlConfiguration)
-				.Mappings(m => m.FluentMappings.AddFromAssemblyOf<DataBase>())
+				.Mappings(m => m.FluentMappings.AddFromAssemblyOf<Hibernate>())
 				.ExposeConfiguration(Config)
 				.BuildSessionFactory();
 		}

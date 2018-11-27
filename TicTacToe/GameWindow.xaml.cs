@@ -3,17 +3,16 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using TicTacToe.Core;
 using TicTacToe.NHibernate;
-using Color = TicTacToe.Resources.Color;
+using TicTacToe.Resources;
 
 namespace TicTacToe
 {
-	public partial class MainWindow
+	public partial class GameWindow
 	{
 		private readonly ISessionFactory _sessionFactory;
-		private readonly MarkType[] _board;
+		private readonly MarkType[] _board = new MarkType[9];
 
 		private readonly Player _crossPlayer;
 		private readonly Player _circlePlayer;
@@ -22,16 +21,14 @@ namespace TicTacToe
 		private bool _isDraw;
 		private bool _isCrossTurn;
 
-		public MainWindow(Player crossPlayer, Player circlePlayer)
+		public GameWindow(Player crossPlayer, Player circlePlayer)
 		{
-			_crossPlayer = crossPlayer ?? throw new ArgumentNullException(nameof(crossPlayer));
-			_circlePlayer = circlePlayer ?? throw new ArgumentNullException(nameof(circlePlayer));
+			_crossPlayer = crossPlayer ?? throw new ArgumentNullException();
+			_circlePlayer = circlePlayer ?? throw new ArgumentNullException();
 
-			_board = new MarkType[9];
-			_sessionFactory = DataBase.GetSessionFactory();
+			_sessionFactory = Hibernate.GetSessionFactory();
 
 			InitializeComponent();
-
 			Start();
 		}
 
@@ -49,14 +46,12 @@ namespace TicTacToe
 			for (var i = 0; i < _board.Length; i++)
 				_board[i] = MarkType.Empty;
 
-			Container.Children.Cast<Button>().ToList().ForEach(button =>
-			{
-				button.Content = string.Empty;
-
-				button.FontSize = 210;
-				button.Background = Brushes.White;
-				button.BorderThickness = new Thickness(0.3);
-			});
+			Container.Children.Cast<Button>().ToList()
+				.ForEach(button =>
+				{
+					button.Content = string.Empty;
+					button.Background = GameColor.Empty;
+				});
 		}
 
 		private void CheckWinner()
@@ -67,21 +62,21 @@ namespace TicTacToe
 			{
 				_isGameOver = true;
 
-				Button00.Background = Button10.Background = Button20.Background = Color.Win;
+				Button00.Background = Button10.Background = Button20.Background = GameColor.Win;
 			}
 
 			if (_board[3] != MarkType.Empty && (_board[3] & _board[4] & _board[5]) == _board[3])
 			{
 				_isGameOver = true;
 
-				Button01.Background = Button11.Background = Button21.Background = Color.Win;
+				Button01.Background = Button11.Background = Button21.Background = GameColor.Win;
 			}
 
 			if (_board[6] != MarkType.Empty && (_board[6] & _board[7] & _board[8]) == _board[6])
 			{
 				_isGameOver = true;
 
-				Button02.Background = Button12.Background = Button22.Background = Color.Win;
+				Button02.Background = Button12.Background = Button22.Background = GameColor.Win;
 			}
 
 			#endregion
@@ -92,21 +87,21 @@ namespace TicTacToe
 			{
 				_isGameOver = true;
 
-				Button00.Background = Button01.Background = Button02.Background = Color.Win;
+				Button00.Background = Button01.Background = Button02.Background = GameColor.Win;
 			}
 
 			if (_board[1] != MarkType.Empty && (_board[1] & _board[4] & _board[7]) == _board[1])
 			{
 				_isGameOver = true;
 
-				Button10.Background = Button11.Background = Button12.Background = Color.Win;
+				Button10.Background = Button11.Background = Button12.Background = GameColor.Win;
 			}
 
 			if (_board[2] != MarkType.Empty && (_board[2] & _board[5] & _board[8]) == _board[2])
 			{
 				_isGameOver = true;
 
-				Button20.Background = Button21.Background = Button22.Background = Color.Win;
+				Button20.Background = Button21.Background = Button22.Background = GameColor.Win;
 			}
 
 			#endregion
@@ -117,14 +112,14 @@ namespace TicTacToe
 			{
 				_isGameOver = true;
 
-				Button00.Background = Button11.Background = Button22.Background = Color.Win;
+				Button00.Background = Button11.Background = Button22.Background = GameColor.Win;
 			}
 
 			if (_board[2] != MarkType.Empty && (_board[2] & _board[4] & _board[6]) == _board[2])
 			{
 				_isGameOver = true;
 
-				Button20.Background = Button11.Background = Button02.Background = Color.Win;
+				Button20.Background = Button11.Background = Button02.Background = GameColor.Win;
 			}
 
 			#endregion
@@ -136,10 +131,11 @@ namespace TicTacToe
 				_isGameOver = true;
 				_isDraw = true;
 
-				Container.Children.Cast<Button>().ToList().ForEach(b =>
-				{
-					b.Background = Color.Draw;
-				});
+				Container.Children.Cast<Button>().ToList()
+					.ForEach(b =>
+					{
+						b.Background = GameColor.Draw;
+					});
 			}
 
 			#endregion
@@ -192,13 +188,13 @@ namespace TicTacToe
 			{
 				_board[index] = MarkType.Cross;
 				button.Content = "X";
-				button.Foreground = Color.Cross;
+				button.Foreground = GameColor.Cross;
 			}
 			else
 			{
 				_board[index] = MarkType.Circle;
 				button.Content = "O";
-				button.Foreground = Color.Circle;
+				button.Foreground = GameColor.Circle;
 			}
 
 			_isCrossTurn ^= true;
@@ -216,21 +212,16 @@ namespace TicTacToe
 
 		private void ChangePlayers_Click(object sender, RoutedEventArgs e)
 		{
-			var setPlayers = new SetPlayers();
-			setPlayers.Show();
+			new PlayersWindow()
+				.Show();
 
 			Close();
 		}
 
 		private void ShowScore_Click(object sender, RoutedEventArgs e)
 		{
-			var score = new Score();
-			score.Show();
-		}
-
-		private void Exit_Click(object sender, RoutedEventArgs e)
-		{
-			Environment.Exit(0);
+			new ScoreWindow()
+				.Show();
 		}
 	}
 }

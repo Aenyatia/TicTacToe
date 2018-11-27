@@ -1,0 +1,81 @@
+﻿<Window x:Class="TicTacToe.PlayersWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+		
+        Title="Players - Tic Tac Toe"
+        ResizeMode="NoResize"
+        Height="450"
+        Width="600"
+        Background="#283645">
+
+	<Window.Resources>
+		<Style TargetType="Grid">
+			<Setter Property="Margin" Value="20" />
+		</Style>
+
+		<Style TargetType="Label">
+			<Setter Property="Background" Value="#6080A6" />
+			<Setter Property="Foreground" Value="#283645" />
+			<Setter Property="FontSize" Value="30" />
+			<Setter Property="FontWeight" Value="DemiBold" />
+
+			<Setter Property="VerticalContentAlignment" Value="Center" />
+			<Setter Property="HorizontalContentAlignment" Value="Center" />
+		</Style>
+
+		<Style TargetType="TextBox">
+			<Setter Property="Background" Value="#C3D0DF" />
+			<Setter Property="Foreground" Value="#283645" />
+			<Setter Property="FontSize" Value="30" />
+
+			<Setter Property="VerticalContentAlignment" Value="Center" />
+			<Setter Property="HorizontalContentAlignment" Value="Center" />
+		</Style>
+
+		<Style TargetType="Button">
+			<Setter Property="Background" Value="#4D5359" />
+			<Setter Property="Foreground" Value="#C3D0DF" />
+			<Setter Property="FontSize" Value="25" />
+			<Setter Property="FontWeight" Value="Bold" />
+
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="Button">
+						<Border Background="{TemplateBinding Background}">
+							<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+			<Style.Triggers>
+				<Trigger Property="IsMouseOver" Value="True">
+					<Setter Property="Background" Value="#F2B134" />
+					<Setter Property="Foreground" Value="#283645" />
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+	</Window.Resources>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="0.5*" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="0.5*" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+
+		<Label Grid.Row="0" Content="Cross player" />
+		<TextBox Name="CrossName" Grid.Row="1" />
+
+		<Label Grid.Row="3" Content="Circle player" />
+		<TextBox Name="CircleName" Grid.Row="4" />
+
+		<Button Click="StartGame_Click" Grid.Row="6"  Content="Start" />
+	</Grid>
+</Window>

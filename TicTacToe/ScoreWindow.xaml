@@ -1,0 +1,68 @@
+﻿<Window x:Class="TicTacToe.ScoreWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+		
+        Title="Score - Tic Tac Toe"
+        ResizeMode="NoResize"
+        Height="450"
+        Width="600"
+        Background="#283645">
+
+	<Window.Resources>
+		<Style TargetType="Grid">
+			<Setter Property="Margin" Value="20" />
+		</Style>
+
+		<Style TargetType="DataGrid">
+			<Setter Property="Background" Value="#283645" />
+
+			<Setter Property="RowHeaderWidth" Value="0" />
+			<Setter Property="BorderThickness" Value="0" />
+		</Style>
+
+		<Style TargetType="DataGridRow">
+			<Setter Property="Background" Value="#C3D0DF" />
+			<Setter Property="Foreground" Value="#283645" />
+			<Setter Property="FontSize" Value="20" />
+			<Setter Property="Height" Value="33" />
+		</Style>
+
+		<Style TargetType="DataGridColumnHeader">
+			<Setter Property="Margin" Value="0, 0, 0, 3" />
+			<Setter Property="Background" Value="#6080A6" />
+			<Setter Property="Foreground" Value="#283645" />
+			<Setter Property="FontSize" Value="22" />
+			<Setter Property="FontWeight" Value="DemiBold" />
+			<Setter Property="Height" Value="37" />
+
+			<Setter Property="VerticalContentAlignment" Value="Center" />
+			<Setter Property="HorizontalContentAlignment" Value="Center" />
+		</Style>
+
+		<Style TargetType="DataGridCell">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="DataGridCell">
+						<Grid>
+							<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</Window.Resources>
+
+	<Grid>
+		<DataGrid Name="Score" IsEnabled="False" AutoGenerateColumns="False">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Name" Width="3*" Binding="{Binding Name}"/>
+				<DataGridTextColumn Header="Win" Width="*" Binding="{Binding Win}" />
+				<DataGridTextColumn Header="Lose" Width="*" Binding="{Binding Lose}" />
+				<DataGridTextColumn Header="Draw" Width="*" Binding="{Binding Draw}" />
+			</DataGrid.Columns>
+		</DataGrid>
+	</Grid>
+</Window>

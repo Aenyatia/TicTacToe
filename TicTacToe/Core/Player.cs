@@ -10,8 +10,11 @@ namespace TicTacToe.Core
 		public virtual int Win { get; protected set; }
 		public virtual int Lose { get; protected set; }
 		public virtual int Draw { get; protected set; }
-		
-		protected Player() { }
+
+		protected Player()
+		{
+			// required by NHibernate
+		}
 
 		protected Player(string name)
 		{
@@ -20,8 +23,7 @@ namespace TicTacToe.Core
 
 		public static Player Create(string name)
 		{
-			if (name.IsEmpty())
-				throw new ArgumentException($"Player '{nameof(name)}' cannot be null, empty or whitespace.");
+			if (name.IsEmpty()) throw new ArgumentException();
 
 			return new Player(name);
 		}

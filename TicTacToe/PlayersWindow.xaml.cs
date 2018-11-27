@@ -7,15 +7,38 @@ using TicTacToe.NHibernate;
 
 namespace TicTacToe
 {
-	public partial class SetPlayers
+	public partial class PlayersWindow
 	{
 		private readonly ISessionFactory _sessionFactory;
 
-		public SetPlayers()
+		public PlayersWindow()
 		{
-			InitializeComponent();
+			_sessionFactory = Hibernate.GetSessionFactory();
 
-			_sessionFactory = DataBase.GetSessionFactory();
+			InitializeComponent();
+		}
+
+		private void StartGame_Click(object sender, RoutedEventArgs e)
+		{
+			var crossName = CrossName.Text.ToLowerInvariant();
+			var circleName = CircleName.Text.ToLowerInvariant();
+
+			if (crossName.IsEmpty() || circleName.Length > 20)
+				return;
+
+			if (circleName.IsEmpty() || circleName.Length > 20)
+				return;
+
+			if (crossName == circleName)
+				return;
+
+			var crossPlayer = GetPlayer(crossName);
+			var circlePlayer = GetPlayer(circleName);
+
+			new GameWindow(crossPlayer, circlePlayer)
+				.Show();
+
+			Close();
 		}
 
 		private Player GetPlayer(string name)
@@ -23,7 +46,6 @@ namespace TicTacToe
 			using (var session = _sessionFactory.OpenSession())
 			using (var transaction = session.BeginTransaction())
 			{
-
 				var player = session.Query<Player>().SingleOrDefault(p => p.Name == name);
 				if (player != null)
 					return player;
@@ -34,31 +56,6 @@ namespace TicTacToe
 
 				return player;
 			}
-
 		}
-
-		private void StartGame_Click(object sender, RoutedEventArgs e)
-		{
-			var crossPlayerName = CrossPlayerName.Text.ToLowerInvariant();
-			var circlePlayerName = CirclePlayerName.Text.ToLowerInvariant();
-
-			if (crossPlayerName.IsEmpty())
-				return;
-
-			if (circlePlayerName.IsEmpty())
-				return;
-
-			if (crossPlayerName == circlePlayerName)
-				return;
-
-			var crossPlayer = GetPlayer(crossPlayerName);
-			var circlePlayer = GetPlayer(circlePlayerName);
-
-			var game = new MainWindow(crossPlayer, circlePlayer);
-			game.Show();
-
-			Close();
-		}
-
 	}
 }

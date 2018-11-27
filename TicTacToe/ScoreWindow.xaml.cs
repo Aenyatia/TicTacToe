@@ -7,17 +7,16 @@ using TicTacToe.ViewModels;
 
 namespace TicTacToe
 {
-	public partial class Score
+	public partial class ScoreWindow
 	{
 		private readonly ISessionFactory _sessionFactory;
 
-		public Score()
+		public ScoreWindow()
 		{
-			_sessionFactory = DataBase.GetSessionFactory();
+			_sessionFactory = Hibernate.GetSessionFactory();
 
 			InitializeComponent();
-
-			ScoreList.ItemsSource = GetBestScore();
+			Score.ItemsSource = GetBestScore();
 		}
 
 		private IEnumerable<ScoreViewModel> GetBestScore()
@@ -27,6 +26,7 @@ namespace TicTacToe
 			{
 				var result = session.Query<Player>()
 					.OrderByDescending(p => p.Win)
+					.ThenBy(p => p.Name)
 					.Take(10)
 					.Select(p => new ScoreViewModel
 					{

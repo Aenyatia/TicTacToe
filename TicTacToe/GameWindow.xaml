@@ -8,40 +8,15 @@
 		Title="Game - Tic Tac Toe"
         ResizeMode="NoResize"
         Height="1000"
-        Width="1000"
-        Background="#283645">
+        Width="1000">
 
 	<Window.Resources>
 		<Style TargetType="Grid">
 			<Setter Property="Margin" Value="10" />
 		</Style>
-
 		<Style TargetType="Button">
 			<Setter Property="FontSize" Value="180" />
 			<Setter Property="BorderThickness" Value="0.3" />
-		</Style>
-
-		<Style x:Key="OptionButton" TargetType="Button">
-			<Setter Property="Background" Value="#4D5359" />
-			<Setter Property="Foreground" Value="#C3D0DF" />
-			<Setter Property="FontSize" Value="25" />
-			<Setter Property="FontWeight" Value="Bold" />
-
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="Button">
-						<Border Background="{TemplateBinding Background}">
-							<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-						</Border>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-			<Style.Triggers>
-				<Trigger Property="IsMouseOver" Value="True">
-					<Setter Property="Background" Value="#F2B134" />
-					<Setter Property="Foreground" Value="#283645" />
-				</Trigger>
-			</Style.Triggers>
 		</Style>
 	</Window.Resources>
 
@@ -49,7 +24,6 @@
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
-
 		<Grid.RowDefinitions>
 			<RowDefinition Height="5*" />
 			<RowDefinition Height="0.1*" />
@@ -62,7 +36,6 @@
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="*" />
 			</Grid.ColumnDefinitions>
-
 			<Grid.RowDefinitions>
 				<RowDefinition Height="*" />
 				<RowDefinition Height="*" />
@@ -81,7 +54,6 @@
 			<Button Name="Button12" Click="Button_Click" Grid.Column="1" Grid.Row="2" />
 			<Button Name="Button22" Click="Button_Click" Grid.Column="2" Grid.Row="2" />
 		</Grid>
-
 		<Grid Grid.Column="0" Grid.Row="2">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
@@ -90,14 +62,13 @@
 				<ColumnDefinition Width="0.1*" />
 				<ColumnDefinition Width="*" />
 			</Grid.ColumnDefinitions>
-
 			<Grid.RowDefinitions>
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 
-			<Button Click="NewGame_Click" Grid.Column="0" Content="New Game" Style="{StaticResource OptionButton}" />
-			<Button Click="ChangePlayers_Click" Grid.Column="2" Content="Change Players" Style="{StaticResource OptionButton}" />
-			<Button Click="ShowScore_Click" Grid.Column="4" Content="Show Score" Style="{StaticResource OptionButton}" />
+			<Button Click="NewGame_Click" Grid.Column="0" Content="New Game" Style="{StaticResource AppButton}" />
+			<Button Click="ChangePlayers_Click" Grid.Column="2" Content="Change Players" Style="{StaticResource AppButton}" />
+			<Button Click="ShowScore_Click" Grid.Column="4" Content="Show Score" Style="{StaticResource AppButton}" />
 		</Grid>
 	</Grid>
 </Window>
